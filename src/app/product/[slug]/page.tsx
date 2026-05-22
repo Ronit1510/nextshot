@@ -6,6 +6,7 @@ import ReviewSection from '@/components/product/review-section';
 import SEOSchema from '@/components/common/seo-schema';
 import ProductCard from '@/components/product/product-card';
 import Link from 'next/link';
+import { ArrowRight } from 'lucide-react';
 import { 
   ShieldCheck, 
   MapPin, 
