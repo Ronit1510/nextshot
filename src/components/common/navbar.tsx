@@ -7,12 +7,7 @@ import { useCartStore } from '@/lib/store/cart-store';
 import { motion, AnimatePresence } from 'framer-motion';
 import Logo from '@/components/branding/logo';
 
-import {
-  SignedIn,
-  SignedOut,
-  UserButton,
-  SignInButton
-} from '@clerk/nextjs';
+import { UserButton } from '@clerk/nextjs';
 
 import {
   ShoppingBag,
@@ -152,39 +147,6 @@ export default function Navbar() {
 
               {/* Auth */}
               <div className="flex items-center">
-
-                <SignedIn>
-                  <div className="flex items-center gap-4">
-
-                    <Link
-                      href="/dashboard"
-                      className="text-[9px] uppercase tracking-[0.2em] text-foreground/75 hover:text-primary duration-300 flex items-center gap-1 font-medium"
-                    >
-                      <LayoutDashboard className="h-3.5 w-3.5" />
-                      Dashboard
-                    </Link>
-
-                    <UserButton
-                      appearance={{
-                        elements: {
-                          userButtonAvatarBox:
-                            'border border-primary/20 h-7 w-7'
-                        }
-                      }}
-                    />
-
-                  </div>
-                </SignedIn>
-
-                <SignedOut>
-                  <SignInButton mode="modal">
-                    <button className="text-[10px] tracking-[0.25em] uppercase text-foreground/80 hover:text-primary transition-colors duration-300 flex items-center gap-1.5 cursor-pointer font-medium">
-                      <UserIcon className="h-4 w-4 stroke-[1.5]" />
-                      Sign In
-                    </button>
-                  </SignInButton>
-                </SignedOut>
-
               </div>
             </div>
 
