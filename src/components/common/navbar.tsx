@@ -8,19 +8,17 @@ import { motion, AnimatePresence } from 'framer-motion';
 import Logo from '@/components/branding/logo';
 
 import {
-  SignedIn,
-  SignedOut,
   UserButton,
   SignInButton
 } from '@clerk/nextjs';
 
-import { 
-  ShoppingBag, 
-  User as UserIcon, 
-  Menu, 
-  X, 
-  Heart, 
-  Compass, 
+import {
+  ShoppingBag,
+  User as UserIcon,
+  Menu,
+  X,
+  Heart,
+  Compass,
   HelpCircle,
   TrendingUp,
   LayoutDashboard
@@ -29,11 +27,15 @@ import {
 export default function Navbar() {
   const pathname = usePathname();
   const cartItems = useCartStore((state) => state.items);
+
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
 
-  const cartCount = cartItems.reduce((acc, item) => acc + item.quantity, 0);
+  const cartCount = cartItems.reduce(
+    (acc, item) => acc + item.quantity,
+    0
+  );
 
   useEffect(() => {
     setMounted(true);
@@ -48,9 +50,21 @@ export default function Navbar() {
   }, []);
 
   const navLinks = [
-    { href: '/shop', label: 'Spirits Catalog', icon: Compass },
-    { href: '/categories', label: 'Categories', icon: TrendingUp },
-    { href: '/about', label: 'Our Story', icon: HelpCircle },
+    {
+      href: '/shop',
+      label: 'Spirits Catalog',
+      icon: Compass
+    },
+    {
+      href: '/categories',
+      label: 'Categories',
+      icon: TrendingUp
+    },
+    {
+      href: '/about',
+      label: 'Our Story',
+      icon: HelpCircle
+    }
   ];
 
   if (!mounted) return null;
@@ -70,7 +84,7 @@ export default function Navbar() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between">
 
-            {/* Desktop Left Nav */}
+            {/* Left Nav */}
             <nav className="hidden lg:flex items-center gap-8 w-1/3">
               {navLinks.map((link) => {
                 const isActive = pathname === link.href;
@@ -95,18 +109,21 @@ export default function Navbar() {
 
             {/* Logo */}
             <div className="flex items-center justify-center lg:w-1/3">
-              <Link href="/">
-                <Logo className="h-8 sm:h-9" showTagline />
+              <Link href="/" className="cursor-pointer">
+                <Logo
+                  className="h-8 sm:h-9"
+                  showTagline={true}
+                />
               </Link>
             </div>
 
-            {/* Desktop Right */}
+            {/* Right Side */}
             <div className="hidden lg:flex items-center justify-end gap-6 w-1/3">
 
               {/* Wishlist */}
               <Link
                 href="/dashboard/wishlist"
-                className="text-foreground/80 hover:text-primary transition-colors duration-300"
+                className="text-foreground/80 hover:text-primary transition-colors duration-300 relative"
               >
                 <Heart className="h-5 w-5 stroke-[1.25]" />
               </Link>
@@ -114,7 +131,7 @@ export default function Navbar() {
               {/* Cart */}
               <Link
                 href="/cart"
-                className="relative text-foreground/80 hover:text-primary transition-colors duration-300"
+                className="text-foreground/80 hover:text-primary transition-colors duration-300 relative flex items-center"
               >
                 <ShoppingBag className="h-5 w-5 stroke-[1.25]" />
 
@@ -124,7 +141,7 @@ export default function Navbar() {
                       initial={{ scale: 0 }}
                       animate={{ scale: 1 }}
                       exit={{ scale: 0 }}
-                      className="absolute -top-1.5 -right-2 bg-primary text-background text-[8px] font-bold h-4 w-4 rounded-full flex items-center justify-center"
+                      className="absolute -top-1.5 -right-2 bg-gradient-to-r from-primary to-accent text-background text-[8px] font-bold h-4 w-4 rounded-full flex items-center justify-center shadow-md font-sans"
                     >
                       {cartCount}
                     </motion.span>
@@ -135,37 +152,24 @@ export default function Navbar() {
               <div className="h-4 w-[1px] bg-border/80" />
 
               {/* Auth */}
-              <div className="flex items-center">
-                <SignedIn>
-                  <div className="flex items-center gap-4">
+              <div className="flex items-center gap-4">
 
-                    <Link
-                      href="/dashboard"
-                      className="text-[9px] uppercase tracking-[0.2em] text-foreground/75 hover:text-primary duration-300 flex items-center gap-1 font-medium"
-                    >
-                      <LayoutDashboard className="h-3.5 w-3.5" />
-                      Dashboard
-                    </Link>
+                <Link
+                  href="/dashboard"
+                  className="text-[9px] uppercase tracking-[0.2em] text-foreground/75 hover:text-primary duration-300 flex items-center gap-1 font-medium"
+                >
+                  <LayoutDashboard className="h-3.5 w-3.5" />
+                  Dashboard
+                </Link>
 
-                    <UserButton
-                      appearance={{
-                        elements: {
-                          userButtonAvatarBox:
-                            'border border-primary/20 h-7 w-7',
-                        },
-                      }}
-                    />
-                  </div>
-                </SignedIn>
+                <SignInButton mode="modal">
+                  <button className="text-[10px] tracking-[0.25em] uppercase text-foreground/80 hover:text-primary transition-colors duration-300 flex items-center gap-1.5 cursor-pointer font-medium">
+                    <UserIcon className="h-4 w-4 stroke-[1.5]" />
+                    Sign In
+                  </button>
+                </SignInButton>
 
-                <SignedOut>
-                  <SignInButton mode="modal">
-                    <button className="text-[10px] tracking-[0.25em] uppercase text-foreground/80 hover:text-primary transition-colors duration-300 flex items-center gap-1.5 font-medium">
-                      <UserIcon className="h-4 w-4 stroke-[1.5]" />
-                      Sign In
-                    </button>
-                  </SignInButton>
-                </SignedOut>
+                <UserButton />
               </div>
             </div>
 
@@ -174,20 +178,22 @@ export default function Navbar() {
 
               <Link
                 href="/cart"
-                className="relative text-foreground/80 hover:text-primary"
+                className="text-foreground/80 hover:text-primary relative"
               >
                 <ShoppingBag className="h-5 w-5 stroke-[1.5]" />
 
                 {cartCount > 0 && (
-                  <span className="absolute -top-1.5 -right-2 bg-primary text-background text-[8px] font-bold h-4 w-4 rounded-full flex items-center justify-center">
+                  <span className="absolute -top-1.5 -right-2 bg-primary text-background text-[8px] font-bold h-4 w-4 rounded-full flex items-center justify-center font-sans">
                     {cartCount}
                   </span>
                 )}
               </Link>
 
               <button
-                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="text-foreground/80 hover:text-primary"
+                onClick={() =>
+                  setMobileMenuOpen(!mobileMenuOpen)
+                }
+                className="text-foreground/80 hover:text-primary cursor-pointer"
               >
                 {mobileMenuOpen ? (
                   <X className="h-6 w-6 stroke-[1.5]" />
