@@ -8,6 +8,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import Logo from '@/components/branding/logo';
 
 import {
+  SignedIn,
+  SignedOut,
   UserButton,
   SignInButton
 } from '@clerk/nextjs';
@@ -110,14 +112,11 @@ export default function Navbar() {
             {/* Logo */}
             <div className="flex items-center justify-center lg:w-1/3">
               <Link href="/" className="cursor-pointer">
-                <Logo
-                  className="h-8 sm:h-9"
-                  showTagline={true}
-                />
+                <Logo className="h-8 sm:h-9" showTagline />
               </Link>
             </div>
 
-            {/* Right Side */}
+            {/* Right Controls */}
             <div className="hidden lg:flex items-center justify-end gap-6 w-1/3">
 
               {/* Wishlist */}
@@ -152,24 +151,40 @@ export default function Navbar() {
               <div className="h-4 w-[1px] bg-border/80" />
 
               {/* Auth */}
-              <div className="flex items-center gap-4">
+              <div className="flex items-center">
 
-                <Link
-                  href="/dashboard"
-                  className="text-[9px] uppercase tracking-[0.2em] text-foreground/75 hover:text-primary duration-300 flex items-center gap-1 font-medium"
-                >
-                  <LayoutDashboard className="h-3.5 w-3.5" />
-                  Dashboard
-                </Link>
+                <SignedIn>
+                  <div className="flex items-center gap-4">
 
-                <SignInButton mode="modal">
-                  <button className="text-[10px] tracking-[0.25em] uppercase text-foreground/80 hover:text-primary transition-colors duration-300 flex items-center gap-1.5 cursor-pointer font-medium">
-                    <UserIcon className="h-4 w-4 stroke-[1.5]" />
-                    Sign In
-                  </button>
-                </SignInButton>
+                    <Link
+                      href="/dashboard"
+                      className="text-[9px] uppercase tracking-[0.2em] text-foreground/75 hover:text-primary duration-300 flex items-center gap-1 font-medium"
+                    >
+                      <LayoutDashboard className="h-3.5 w-3.5" />
+                      Dashboard
+                    </Link>
 
-                <UserButton />
+                    <UserButton
+                      appearance={{
+                        elements: {
+                          userButtonAvatarBox:
+                            'border border-primary/20 h-7 w-7'
+                        }
+                      }}
+                    />
+
+                  </div>
+                </SignedIn>
+
+                <SignedOut>
+                  <SignInButton mode="modal">
+                    <button className="text-[10px] tracking-[0.25em] uppercase text-foreground/80 hover:text-primary transition-colors duration-300 flex items-center gap-1.5 cursor-pointer font-medium">
+                      <UserIcon className="h-4 w-4 stroke-[1.5]" />
+                      Sign In
+                    </button>
+                  </SignInButton>
+                </SignedOut>
+
               </div>
             </div>
 
@@ -201,6 +216,7 @@ export default function Navbar() {
                   <Menu className="h-6 w-6 stroke-[1.5]" />
                 )}
               </button>
+
             </div>
           </div>
         </div>
