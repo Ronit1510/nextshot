@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Star, MessageSquare, ShieldCheck, PenTool } from 'lucide-react';
-import { SignedIn, SignedOut, SignInButton } from '@clerk/nextjs';
+import { SignInButton } from '@clerk/nextjs';
 
 export interface ReviewItem {
   _id: string;

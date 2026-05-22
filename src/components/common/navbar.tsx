@@ -17,11 +17,9 @@ import {
   TrendingUp,
   LayoutDashboard
 } from 'lucide-react';
-import { 
-  UserButton, 
-  SignedIn, 
-  SignedOut, 
-  SignInButton 
+import {
+  UserButton,
+  SignInButton
 } from '@clerk/nextjs';
 
 export default function Navbar() {
